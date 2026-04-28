@@ -15,6 +15,7 @@ const city = ref('')
 const weather = ref(null)
 const error = ref('')
 const savedLocations = ref([])
+const emit = defineEmits(['weather-updated'])
 
 // choose an icon based on the current weather text
 const weatherIcon = computed(() => {
@@ -38,6 +39,8 @@ async function searchWeather() {
   try {
     error.value = ''
     weather.value = await getWeather(city.value)
+
+    emit("weather-updated", weather.value)
 
     localStorage.setItem('lastCity', city.value)
     localStorage.setItem('lastWeather', JSON.stringify(weather.value))

@@ -18,6 +18,11 @@ onMounted(() => {
   }
 })
 
+function updateWeather(newWeather) {
+  weather.value = newWeather
+  localStorage.setItem('lastWeather', JSON.stringify(newWeather))
+}
+
 // choose a background image based on the current weather condition
 const backgroundStyle = computed(() => {
   if (!weather.value) {
@@ -55,7 +60,7 @@ const backgroundStyle = computed(() => {
       <router-link to="/forecast" class="nav-btn">3 Day Forecast</router-link>
     </nav>
 
-    <router-view />
+    <router-view @weather-updated="updateWeather" />
   </div>
 </template>
 
